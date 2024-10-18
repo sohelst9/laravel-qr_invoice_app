@@ -1,0 +1,11 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^www\.test.chomolokko\.com$
+RewriteRule ^/?$ "http\:\/\/test.chomolokko\.com\/" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^test.chomolokko.com$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.test.chomolokko.com$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
+
+

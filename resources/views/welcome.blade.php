@@ -79,9 +79,39 @@
 
 <body>
     <div class="scan_ticket">
-        <a id="ScanButton" class="scan_ticket_btn">Scan Ticket</a>
-        <a id="{{ route('users') }}" class="user_list">User List</a>
+        <a id="scanButton" class="scan_ticket_btn">Scan Ticket</a>
+        <a href="{{ route('users') }}" class="user_list">User List</a>
     </div>
+
+
+    <script>
+        document.getElementById('scanButton').onclick = function() {
+            var html5QrCode = new Html5Qrcode("reader");
+            html5QrCode.start({
+                    facingMode: "environment"
+                }, {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (decodedText, decodedResult) => {
+                    // Handle the scanned result
+                    $.post('/scan', {
+                        unique_id: decodedText,
+                        _token: '{{ csrf_token() }}'
+                    }).done(function(data) {
+                        alert(data.message);
+                    }).fail(function(xhr) {
+                        alert(xhr.responseJSON.message);
+                    });
+                },
+                (errorMessage) => {
+                    // Handle scan error
+                }
+            ).catch(err => {
+                console.error(err);
+            });
+        }
+    </script>
 </body>
 
 </html>

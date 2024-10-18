@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Invoice</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         body {
             padding: 20px;
@@ -29,17 +30,20 @@
     
     <div class="invoice">
         <h3>User Information</h3>
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>User ID:</strong> 12345</p>
-        <p><strong>Bio Info:</strong> Software Developer, passionate about coding and technology.</p>
-        <p><strong>Status:</strong> Active</p>
+        <p><strong>Name:</strong> {{ $user->name }}</p>
+        <p><strong>User ID:</strong> {{ $user->unique_id }}</p>
+        <p><strong>User Number:</strong> {{ $user->phone }}</p>
+        <p><strong>Bio Info:</strong> {{ $user->biodata }}</p>
+        <p><strong>Status:</strong> {{ $user->status }}</p>
         
         <h3 class="mt-4">QR Code</h3>
-        <img src="path/to/qr-code.png" alt="QR Code" class="qr-code">
+        {!! $qrCode !!}
         <!-- Replace 'path/to/qr-code.png' with the actual path to your QR code image -->
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </body>
 </html>

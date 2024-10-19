@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class UserController extends Controller
 {
@@ -23,7 +25,7 @@ class UserController extends Controller
     public function invoice($id)
     {
         $user = User::findOrFail($id);
-        $qrCode = QrCode::size(300)->generate($user->unique_id);
+        $qrCode = QrCode::size(100)->generate($user->unique_id);
 
         return view('invoice', compact('user', 'qrCode'));
     }
@@ -43,5 +45,22 @@ class UserController extends Controller
         }
 
         return 'User not found.';
+    }
+    //--invoicepdf
+
+    public function invoicepdf($id)
+    {
+        $user = User::findOrFail($id);
+        $qrCode = QrCode::format('png')->size(100)->generate($user->unique_id);
+
+        $image = Image::make($qrCode);
+
+        // Save QR code image to public folder
+        $qrCodePath = public_path('qr_code.png');
+        $image->save($qrCodePath);
+
+        $pdf = Pdf::loadView('invoice', compact('user', 'qrCodeImage'));
+
+        return $pdf->download('invoice_' . $user->unique_id . '.pdf');
     }
 }

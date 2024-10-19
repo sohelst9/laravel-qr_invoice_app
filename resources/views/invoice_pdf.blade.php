@@ -26,10 +26,8 @@
 
 <div class="container">
     <h1 class="mb-4">User Invoice</h1>
-    <a href="{{ route('users') }}" class="btn btn-secondary mb-3">Back to User List</a>
     
     <div class="invoice">
-        <a href="{{ route('invoicepdf', $user->id) }}" class="btn btn-primary mb-3">Download PDF</a>
         <h3>User Information</h3>
         <p><strong>Name:</strong> {{ $user->name }}</p>
         <p><strong>User ID:</strong> {{ $user->unique_id }}</p>
@@ -39,7 +37,7 @@
         
         
         <h3 class="mt-4">QR Code</h3>
-        {!! $qrCode !!}
+        <img src="{{ asset('qr_code.png') }}" alt="QR Code" class="qr-code" />
 
        
         <!-- Replace 'path/to/qr-code.png' with the actual path to your QR code image -->

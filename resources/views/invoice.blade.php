@@ -34,7 +34,7 @@
         <p><strong>User ID:</strong> {{ $user->unique_id }}</p>
         <p><strong>User Number:</strong> {{ $user->phone }}</p>
         <p><strong>Bio Info:</strong> {{ $user->biodata }}</p>
-        <p><strong>Status:</strong> {{ $user->status }}</p>
+        <p><strong>Status:</strong> <a class="btn btn-sm btn-danger">{{ $user->status }}</a></p>
         
         <h3 class="mt-4">QR Code</h3>
         {!! $qrCode !!}

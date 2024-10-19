@@ -20,22 +20,28 @@ class UserController extends Controller
         return view('users', compact('users'));
     }
     //--invoice
-    public function invoice(Request $request)
+    public function invoice($id)
+    {
+        $user = User::findOrFail($id);
+        $qrCode = QrCode::size(300)->generate($user->unique_id);
+
+        return view('invoice', compact('user', 'qrCode'));
+    }
+    //--scan
+    public function scan(Request $request)
     {
         $uniqueId = $request->input('unique_id');
         $user = User::where('unique_id', $uniqueId)->first();
         if ($user) {
-            if (!$user->checked) {
-                $user->checked = true;
-                $user->save();
-                return response()->json(['message' => 'User checked successfully.']);
+            if ($user->status == 'unchecked') {
+                $user->status = 'checked';
+                $user->save();;
+                return 'User checked successfully.';
             } else {
-                return response()->json(['message' => 'User already checked.'], 400);
+                return 'User already checked.';
             }
         }
 
-        return response()->json(['message' => 'User not found.'], 404);
+        return 'User not found.';
     }
-    //--scan
-    public function scan($id) {}
 }

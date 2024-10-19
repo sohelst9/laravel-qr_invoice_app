@@ -32,13 +32,19 @@
             </thead>
             <tbody>
 
-                @foreach ($users as $key=>$user)
+                @foreach ($users as $key => $user)
                     <tr>
-                        <td>{{ $key+1 }}</td>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->unique_id }}</td>
                         <td>{{ $user->phone }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>
+                            @if ($user->status == 'checked')
+                                <a class="btn btn-sm btn-primary">{{ $user->status }}</a>
+                            @else
+                                <a class="btn btn-sm btn-danger">{{ $user->status }}</a>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('invoice', $user->id) }}" class="btn btn-secondary">View Invoice</a>
                         </td>
